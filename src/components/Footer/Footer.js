@@ -28,7 +28,7 @@ const Footer = () => {
           GitHub
         </a>
       </p>
-      <p className="footerCopyRight">© 2019 Vikas Dayananda</p>
+      <p className="footerCopyRight">© 2022 Agboola Feyikemi</p>
     </div>
   );
 };
