@@ -1,0 +1,11 @@
+.filter-dropdown-graph {
+    width: 100px;
+    margin: 0px 20px;
+    display: inline-table;
+    margin-top: -10px;
+}
+
+.graph-info{
+    text-align: center;
+    display: block;
+}

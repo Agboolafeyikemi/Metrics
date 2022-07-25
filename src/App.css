@@ -1,38 +1,106 @@
-.App {
+@import url("https://fonts.googleapis.com/css?family=Noto+Sans+KR&display=swap");
+
+html {
+  height: 100%;
+  box-sizing: border-box;
+}
+
+span {
+  text-transform: capitalize;
+}
+
+body {
+  background-color: #425866;
+  -webkit-animation: 100s scroll infinite linear;
+  -moz-animation: 100s scroll infinite linear;
+  -o-animation: 100s scroll infinite linear;
+  -ms-animation: 100s scroll infinite linear;
+  animation: 100s scroll infinite linear;
+  font-family: "Noto Sans KR", sans-serif;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.text-center {
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+h1.body-head {
+  color: #fff;
+  font-size: 3em;
+  text-align: center;
+
+  text-decoration: underline;
+  letter-spacing: 4px;
+  text-shadow: 1px 1px 1px red, 1px 1px 1px red, 1px 1px 1px red;
+  font-family: "Monoton", cursive;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.App {
+  position: relative;
   min-height: 100vh;
+  text-align: center;
+}
+
+.inner-container {
+  padding: 50px;
+  min-height: 85vh;
+}
+.search-box {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  width: 25%;
+  margin-left: 17px;
+}
+/* Header */
+.header {
+  font-size: 40px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Footer */
+
+.footer {
+  clear: both;
+  position: relative;
+  z-index: 10;
+  margin-top: -3em;
+  right: 0;
+  left: 0;
+  padding: 20px 5px 20px 5px;
+  text-align: center;
+  height: 100px;
+  background-color: #232b2b;
+  color: white;
+  border-top: 2px solid white;
+  line-height: 10px;
+  bottom: 0;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
+.footer a {
+  color: white;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+}
+
+.footer a:hover {
+  border-bottom: 1px solid rgba(255, 255, 255, 1);
+}
+
+.footer p {
+  opacity: 0.75;
+  font-size: 16px;
+}
+
+.footerCopyRight {
+  margin-top: 5px;
+}
+
+@media screen and (max-width: 500px) {
+  .search-box {
+    width: 100%;
+    margin: 10px auto;
   }
 }

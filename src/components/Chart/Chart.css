@@ -1,0 +1,7 @@
+.chart{
+    z-index: 100;
+}
+.chart-div{
+    min-height: 100px;
+    min-width: 80%;
+}
