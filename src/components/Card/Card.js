@@ -22,15 +22,17 @@ const Card = ({ user, data, showUserMetrics }) => {
               />
             ) : (
               <div className={"avatar-circle " + getRandomColor()}>
-                <span className="initials">{user.name[0]}</span>
+                <span className="initials">
+                  {user && user.name && user.name[0]}
+                </span>
               </div>
             )}
           </div>
           <div>
             <div className="card-name-wrapper">
-              <span className={"name"}>{user.name}</span>
+              <span className={"name"}>{user && user.name}</span>
               <br />
-              <span className={"title"}>{user.occupation}</span>
+              <span className={"title"}>{user && user.occupation}</span>
               <br />
               <br />
             </div>

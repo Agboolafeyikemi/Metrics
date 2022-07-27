@@ -3,7 +3,7 @@ import TextField from "@material-ui/core/TextField";
 import { createTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 
-export const Search = (props) => {
+export const Search = ({ onChange, searchName }) => {
   const theme = () =>
     createTheme({
       overrides: {
@@ -47,15 +47,15 @@ export const Search = (props) => {
         id="search"
         placeholder="Enter Name"
         label="Search By"
-        value={props.searchName || ""}
+        value={searchName || ""}
         type={"text"}
         margin="normal"
         className="field"
-        onChange={props.onChange}
+        onChange={onChange}
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">
-              <i className="material-icons" onClick={props.onChange}>
+              <i className="material-icons" onClick={onChange}>
                 search
               </i>
             </InputAdornment>

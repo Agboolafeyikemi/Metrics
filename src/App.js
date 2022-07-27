@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import "./App.css";
 import Card from "./components/Card/Card";
 import Footer from "./components/Footer/Footer";
@@ -6,18 +6,16 @@ import { Search } from "./components/Search/Search";
 import { Filter } from "./components/Filters/Filter";
 import { GraphModal } from "./components/GraphModal/graphModal";
 import { isEmpty } from "./constants";
-
-var UserData = require("./data/users.json");
+import api from "./api/users";
 var LogData = require("./data/logs.json");
 
 const App = () => {
-  const [userData, setUserData] = useState(UserData);
+  const [userData, setUserData] = useState([]);
   const [search, setSearch] = useState("");
   const [showGraph, setShowGraph] = useState(false);
   const [selectedUserId, setSelectedUserId] = useState(null);
   const [data, setData] = useState({});
   const [openFilters, setOpenFilters] = useState(false);
-
   const showUserMetrics = (user) => {
     setSelectedUserId(user.id);
     setShowGraph(true);
@@ -26,17 +24,20 @@ const App = () => {
     setShowGraph(!showGraph);
   };
   const onChangeName = (e) => {
-    let userData = [...UserData];
-
     setSearch(e.target.value);
     setTimeout(() => {
-      let searchData = userData.filter((user) =>
-        user.name.toLowerCase().includes(search.toLowerCase())
+      const res = userData.filter(
+        (user) =>
+          user.name && user.name.toLowerCase().includes(search.toLowerCase())
       );
-      setUserData(searchData);
+      setUserData(res);
     }, 100);
   };
-
+  //retrieve users
+  const retrieveUsers = async () => {
+    const res = await api.get("/users");
+    return res.data;
+  };
   const parseData = () => {
     let map = new Map();
     LogData.forEach((data) => {
@@ -71,7 +72,6 @@ const App = () => {
   };
 
   const onApply = (sortBy) => {
-    let userData = [...UserData];
     if (!sortBy) {
       setUserData(userData);
       setOpenFilters(false);
@@ -79,17 +79,17 @@ const App = () => {
     }
 
     if (sortBy === "name") {
-      setUserData(
-        userData.sort(function (a, b) {
-          if (a.name < b.name) {
-            return -1;
-          }
-          if (a.name > b.name) {
-            return 1;
-          }
-          return 0;
-        })
-      );
+      userData.sort(function (a, b) {
+        if (a.name < b.name) {
+          return -1;
+        }
+        if (a.name > b.name) {
+          return 1;
+        }
+        return 0;
+      });
+
+      // return;
     } else if (sortBy === "impression") {
       userData.sort(function (a, b) {
         let userA = data.get(a.id);
@@ -127,10 +127,18 @@ const App = () => {
         return 0;
       });
     }
-    setUserData(userData);
+
+    setUserData([...userData]);
     setOpenFilters(false);
   };
 
+  useEffect(() => {
+    const getAllUsers = async () => {
+      const allUsers = await retrieveUsers();
+      if (allUsers) setUserData(allUsers);
+    };
+    getAllUsers();
+  }, []);
   useEffect(() => {
     parseData();
   }, []);
@@ -174,12 +182,14 @@ const App = () => {
           <div className="row">
             {userData.map((user) => {
               return (
-                <Card
-                  key={user.id}
-                  user={user}
-                  data={data.get(user.id)}
-                  showUserMetrics={showUserMetrics}
-                />
+                user && (
+                  <Card
+                    key={user.id}
+                    user={user}
+                    data={data.get(user.id)}
+                    showUserMetrics={showUserMetrics}
+                  />
+                )
               );
             })}
           </div>
